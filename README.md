@@ -27,7 +27,7 @@ Cookiecutter 1.4.0 or higher)
 
 Generate a Python package project::
 
-    cookiecutter https://github.com/holgi/cookiecutter-pyproject.git
+    cookiecutter https://github.com/holgi/cookiecutter_pyproject.git
 
 Then change to the project and setup the repo and development environment:
 
