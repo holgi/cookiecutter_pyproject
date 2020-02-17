@@ -21,6 +21,6 @@ To install the development version of SartoriUSB:
 
     # create a virtual environment and install all required dev dependencies
     cd {{ cookiecutter.project_slug }}
-    make setupdev
+    make devenv
 
 To run the tests, use `make tests` or `make coverage` for a complete report.
