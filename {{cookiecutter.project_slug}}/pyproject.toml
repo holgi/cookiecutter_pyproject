@@ -1,0 +1,67 @@
+{%- set license_classifiers = {
+    'Beerware': 'License :: Freely Distributable',
+    'BSD license': 'License :: OSI Approved :: BSD License',
+    'GNU General Public License v3': 'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'
+} %}
+
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "{{ cookiecutter.project_slug }}"
+dist-name = "{{ cookiecutter.project_slug }}"
+author = "{{ cookiecutter.full_name }}"
+author-email = "{{ cookiecutter.email }}"
+home-page = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+description-file = "README.md"
+{%- if cookiecutter.open_source_license in license_classifiers %}
+license = "{{ cookiecutter.open_source_license }}"
+{%- endif %}
+
+# see https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3 :: Only",
+{%- if cookiecutter.open_source_license in license_classifiers %}
+    "{{ license_classifiers[cookiecutter.open_source_license] }}",
+{%- endif %}
+]
+
+requires = [
+
+]
+requires-python = ">=3.7"
+
+[tool.flit.metadata.requires-extra]
+test = [
+    "pytest >=4.0.0",
+    "pytest-cov",
+    "pytest-mock",
+]
+dev = [
+    "black",
+    "flake8",
+    "flake8-comprehensions",
+    "isort",
+    "keyring",
+    "pre-commit",
+    "tox",
+]
+
+[tool.black]
+line-length = 79
+py37 = true
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
