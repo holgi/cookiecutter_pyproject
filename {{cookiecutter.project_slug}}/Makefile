@@ -49,7 +49,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -f .coverage
 	rm -fr htmlcov/
 
-lint: ## check style with flake8
+lint: ## reformat with black and check style with flake8
 	isort -rc {{cookiecutter.project_slug}}
 	isort -rc tests
 	black {{cookiecutter.project_slug}} tests
@@ -58,12 +58,12 @@ lint: ## check style with flake8
 test: ## run tests quickly with the default Python
 	pytest tests -x --disable-warnings -k "not app"
 
-coverage: ## check code coverage with the default Python
+coverage: ## full test suite, check code coverage and open coverage report
 	pytest tests --cov={{cookiecutter.project_slug}}
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
-tox:  ## run a full tox test
+tox:  ## run fully isolated tests with tox
 	tox
 
 install:  ## install updated project.toml with flint
@@ -75,7 +75,7 @@ devenv: ## setup development environment
 	.venv/bin/pip3 install flit
 	.venv/bin/flit install --pth-file
 
-repo: devenv ## setup complete project
+repo: devenv ## complete project setup with development environment and git repo
 	git init .
 	.venv/bin/pre-commit install
 	git add .
