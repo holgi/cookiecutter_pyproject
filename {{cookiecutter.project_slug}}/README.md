@@ -15,7 +15,7 @@
 
 ## Development
 
-To install the development version of SartoriUSB:
+To install the development version of {{ cookiecutter.project_name }}:
 
     git clone https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git
 
