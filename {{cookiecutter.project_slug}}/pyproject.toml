@@ -41,6 +41,7 @@ test = [
     "pytest >=4.0.0",
     "pytest-cov",
     "pytest-mock",
+    "tox",
 ]
 dev = [
     "black",
@@ -49,7 +50,6 @@ dev = [
     "isort",
     "keyring",
     "pre-commit",
-    "tox",
 ]
 
 [tool.black]
