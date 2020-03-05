@@ -78,6 +78,10 @@ devenv: ## setup development environment
 
 repo: devenv ## complete project setup with development environment and git repo
 	git init .
-	.venv/bin/pre-commit install
+	.venv/bin/pre-commit install --install-hooks --hook-type pre-push
 	git add .
-	git commit -m "import of project template" --no-verify
+	git commit -m "import of project template"
+{% if cookiecutter.remote_git_repo != "" -%}
+	git remote add origin {{ cookiecutter.remote_git_repo }}
+	git push -u origin master
+{% endif %}
