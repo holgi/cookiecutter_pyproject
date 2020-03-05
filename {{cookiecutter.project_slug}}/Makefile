@@ -84,4 +84,4 @@ repo: devenv ## complete project setup with development environment and git repo
 	git remote add origin {{ cookiecutter.remote_git_repo }}
 	git push -u origin master --no-verify
 	{% endif %}
-	.venv/bin/pre-commit install --install-hooks --hook-type pre-push
+	.venv/bin/pre-commit install --install-hooks
