@@ -56,10 +56,10 @@ lint: ## reformat with black and check style with flake8
 	black {{cookiecutter.project_slug}} tests
 	flake8 {{cookiecutter.project_slug}} tests
 
-test: ## run tests quickly with the default Python
+test: lint ## run tests quickly with the default Python
 	pytest tests -x --disable-warnings -k "not app"
 
-coverage: ## full test suite, check code coverage and open coverage report
+coverage: lint ## full test suite, check code coverage and open coverage report
 	pytest tests --cov={{cookiecutter.project_slug}}
 	coverage html
 	$(BROWSER) htmlcov/index.html
