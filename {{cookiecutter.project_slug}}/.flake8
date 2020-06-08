@@ -1,0 +1,4 @@
+[flake8]
+select = C,E,F,W,S
+ignore = E203,W503
+per-file-ignores = tests/*:S101
