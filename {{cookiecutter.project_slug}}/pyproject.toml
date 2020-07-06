@@ -48,7 +48,7 @@ dev = [
     "flake8",
     "flake8-comprehensions",
     "flake8-bandit",
-    "isort",
+    "isort >= 5.0.0",
     "keyring",
     "pre-commit",
 ]

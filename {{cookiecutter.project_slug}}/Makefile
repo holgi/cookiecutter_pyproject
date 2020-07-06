@@ -51,8 +51,8 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 
 lint: ## reformat with black and check style with flake8
-	isort -rc {{cookiecutter.project_slug}}
-	isort -rc tests
+	isort {{cookiecutter.project_slug}}
+	isort tests
 	black {{cookiecutter.project_slug}} tests
 	flake8 {{cookiecutter.project_slug}} tests
 
