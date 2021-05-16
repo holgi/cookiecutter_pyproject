@@ -21,6 +21,8 @@ all three test strategies will run "make lint" before to catch easily made
 mistakes.
 """
 
+import pytest
+
 
 def test_example_unittest():
     """ example unittest
