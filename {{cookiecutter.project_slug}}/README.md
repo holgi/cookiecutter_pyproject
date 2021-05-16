@@ -17,7 +17,7 @@
 
 To install the development version of {{ cookiecutter.project_name }}:
 
-    git clone https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git
+    git clone {{ cookiecutter.remote_git_repo }}
 
     # create a virtual environment and install all required dev dependencies
     cd {{ cookiecutter.project_slug }}
