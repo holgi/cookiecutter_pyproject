@@ -13,7 +13,7 @@ module = "{{ cookiecutter.project_slug }}"
 dist-name = "{{ cookiecutter.project_slug }}"
 author = "{{ cookiecutter.full_name }}"
 author-email = "{{ cookiecutter.email }}"
-home-page = "{{ remote_git_repo }}"
+home-page = "{{ cookiecutter.remote_git_repo }}"
 description-file = "README.md"
 {%- if cookiecutter.open_source_license in license_classifiers %}
 license = "{{ cookiecutter.open_source_license }}"
