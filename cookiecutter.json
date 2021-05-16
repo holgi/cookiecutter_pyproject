@@ -1,7 +1,6 @@
 {
   "full_name": "Jane Doe",
   "email": "jane@example.com",
-  "github_username": "jane",
   "project_name": "Some Python Project",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
   "project_short_description": "Quick Setup of a new python project with flit, pytes, tox, etc.",
