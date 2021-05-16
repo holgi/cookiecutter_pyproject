@@ -48,8 +48,9 @@ developers work:
 - `clean-test`: remove test and coverage artifacts
 
 - `lint`: reformat with black and check style with flake8
-- `test`: run tests quickly, will stop on first error
-- `coverage`: full test suite, check code coverage and open coverage report
+- `test`: run unit tests quickly, will stop on first error
+- `testall`: run the complete test suite
+- `coverage`: functional tests only, check code coverage and open report
 - `tox`: run fully isolated tests with tox
 
 - `install`: install updated project.toml with flint
