@@ -6,6 +6,6 @@
   "project_short_description": "Quick Setup of a new python project with flit, pytes, tox, etc.",
   "version": "0.0.1",
   "open_source_license": ["Beerware", "BSD license", "GNU General Public License v3", "Not open source"],
-  "remote_git_repo": ""
+  "remote_git_repo": "",
   "use_main_as_default_branch": ["yes", "no"]
 }
