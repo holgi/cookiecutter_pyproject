@@ -81,7 +81,7 @@ devenv: ## setup development environment
 
 repo: devenv ## complete project setup with development environment and git repo
 	git init .
-	{% if cookiecutter.use_main_as_default_branch == "yes" %}git branch -m main{% endif %}
+	git branch -m {{cookiecutter.default_branch}}
 	git add .
 	git commit -m "import of project template"
 	{% if cookiecutter.remote_git_repo != "" -%}
