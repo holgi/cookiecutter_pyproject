@@ -8,18 +8,17 @@
 requires = ["flit"]
 build-backend = "flit.buildapi"
 
-[tool.flit.metadata]
-module = "{{ cookiecutter.project_slug }}"
-dist-name = "{{ cookiecutter.project_slug }}"
-author = "{{ cookiecutter.full_name }}"
-author-email = "{{ cookiecutter.email }}"
-{%- if cookiecutter.remote_git_repo != "" %}
-home-page = "{{ cookiecutter.remote_git_repo }}"
-{%- endif %}
-description-file = "README.md"
-{%- if cookiecutter.open_source_license in license_classifiers %}
-license = "{{ cookiecutter.open_source_license }}"
-{%- endif %}
+[project]
+name = "{{ cookiecutter.project_slug }}"
+readme = "README.md"
+description = "{{ cookiecutter.project_short_description }}"
+license = { file = "LICENSE" }
+requires-python = ">=3.7"
+dynamic = ["version"]
+
+authors = [
+    {name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}"},
+]
 
 # see https://pypi.org/classifiers/
 classifiers = [
@@ -33,12 +32,16 @@ classifiers = [
 {%- endif %}
 ]
 
-requires = [
+dependencies = [
 
 ]
-requires-python = ">=3.7"
 
-[tool.flit.metadata.requires-extra]
+{%- if cookiecutter.remote_git_repo != "" %}
+[project.urls]
+Source = "{{ cookiecutter.remote_git_repo }}"
+{%- endif %}
+
+[project.optional-dependencies]
 test = [
     "pytest >=4.0.0",
     "pytest-cov",
