@@ -76,7 +76,7 @@ install:  ## install updated project.toml with flint
 devenv: ## setup development environment
 	python3 -m venv --prompt {{cookiecutter.project_slug}} .venv
 	.venv/bin/pip3 install --upgrade pip
-	.venv/bin/pip3 install flit
+	.venv/bin/pip3 install flit>3.2
 	.venv/bin/flit install --pth-file
 
 repo: devenv ## complete project setup with development environment and git repo
