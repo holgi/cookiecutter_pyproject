@@ -58,16 +58,16 @@ dev = [
 
 [tool.black]
 line-length = 79
-py37 = true
+target-version = ['py37','py38', 'py39']
 include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.tox
-  | \.venv
-  | build
-  | dist
-)/
+extend-exclude = '''
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+^/.git
+^/.tox
+^/.venv
+^/.build
+^/.dist
 '''
 
 [tool.isort]
