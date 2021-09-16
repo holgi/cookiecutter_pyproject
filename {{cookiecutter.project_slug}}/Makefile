@@ -56,14 +56,22 @@ lint: ## reformat with black and check style with flake8
 	black {{cookiecutter.project_slug}} tests
 	flake8 {{cookiecutter.project_slug}} tests
 
-test: lint ## run tests quickly with the default Python
-	pytest tests -x --disable-warnings -m "not fun"
+test: lint ## run tests quickly, stop on first error
+	pytest tests -x -l --last-failed --disable-warnings -m "not fun"
 
-testall: lint ## run tests quickly with the default Python
-	pytest tests
+testfun: lint ## run functional tests, stop on first error
+	pytest tests -x -l -m "fun"
 
-coverage: lint ## full test suite, check code coverage and open coverage report
-	pytest tests --cov={{cookiecutter.project_slug}} -m "fun"
+testall: lint ## run all tests
+	pytest tests -l
+
+coverage: lint ## functional test suite, check code coverage and open coverage report
+	pytest tests --cov={{cookiecutter.project_slug}} -l -m "fun"
+	coverage html
+	$(BROWSER) htmlcov/index.html
+
+coverall: lint ## full test suite, check code coverage and open coverage report
+	pytest tests --cov={{cookiecutter.project_slug}} -l
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
