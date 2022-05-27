@@ -57,16 +57,16 @@ lint: ## reformat with black and check style with flake8
 	flake8 {{cookiecutter.project_slug}} tests
 
 test: lint ## run tests quickly, stop on first error
-	pytest tests -x -l --last-failed --disable-warnings -m "not fun"
+	pytest tests -x -l --last-failed --disable-warnings -m "not functional"
 
-testfun: lint ## run functional tests, stop on first error
-	pytest tests -x -l -m "fun"
+testfunctional: lint ## run functional tests, stop on first error
+	pytest tests -x -l -m "functional"
 
 testall: lint ## run all tests
 	pytest tests -l
 
 coverage: lint ## functional test suite, check code coverage and open coverage report
-	pytest tests --cov={{cookiecutter.project_slug}} -l -m "fun"
+	pytest tests --cov={{cookiecutter.project_slug}} -l -m "functional"
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
