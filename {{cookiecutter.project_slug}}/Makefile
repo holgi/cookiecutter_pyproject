@@ -1,4 +1,4 @@
-.PHONY: clean clean-test clean-pyc clean-build docs help
+.PHONY: clean coverage coverall devenv install lint prepareenv repo test testall testfunctional tox
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -54,7 +54,7 @@ lint: ## reformat with black and check style with flake8
 	isort src
 	isort tests
 	black src tests
-	flake8 src 
+	flake8 src
 	flake8 --ignore S101 tests
 
 test: lint ## run tests quickly, stop on first error
@@ -82,13 +82,16 @@ tox:  ## run fully isolated tests with tox
 install:  ## install updated project.toml with flint
 	flit install --pth-file
 
-devenv: ## setup development environment
+prepareenv: ## helper to create virtual environment and install basic packages
 	python3 -m venv --prompt {{cookiecutter.project_slug}} .venv
 	.venv/bin/pip3 install --upgrade pip
 	.venv/bin/pip3 install "flit>3.2"
 	.venv/bin/flit install --pth-file
 
-repo: devenv ## complete project setup with development environment and git repo
+devenv: prepareenv ## setup development environment including precommit hooks
+	.venv/bin/pre-commit install --install-hooks
+
+repo: prepareenv ## complete project setup with development environment and git repo
 	git init .
 	git add .
 	git commit -m "import of project template"
