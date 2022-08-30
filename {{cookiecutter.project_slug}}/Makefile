@@ -54,7 +54,8 @@ lint: ## reformat with black and check style with flake8
 	isort src
 	isort tests
 	black src tests
-	flake8 src tests
+	flake8 src 
+	flake8 --ignore S101 tests
 
 test: lint ## run tests quickly, stop on first error
 	pytest tests -x -l --last-failed --disable-warnings -m "not functional"
