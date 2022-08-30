@@ -31,6 +31,8 @@ def test_example_unittest():
     """
     import {{ cookiecutter.project_slug }}  # noqa: F401
 
+    assert True
+
 
 @pytest.mark.functional
 def test_example_functional_test():
@@ -38,4 +40,6 @@ def test_example_functional_test():
 
     will be by 'make  coverage' and 'make testall' but not 'make test'
     """
+    import {{ cookiecutter.project_slug }}  # noqa: F401
+
     assert True
