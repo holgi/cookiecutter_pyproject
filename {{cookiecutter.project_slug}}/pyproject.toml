@@ -5,16 +5,15 @@
 } %}
 
 [build-system]
-requires = ["flit"]
-build-backend = "flit.buildapi"
+requires = ["flit_core>=3.2,<4"]
+build-backend = "flit_core.buildapi"
 
 [project]
 name = "{{ cookiecutter.project_slug }}"
 readme = "README.md"
-description = "{{ cookiecutter.project_short_description }}"
 license = { file = "LICENSE" }
-requires-python = ">=3.7"
-dynamic = ["version"]
+requires-python = ">=3.9"
+dynamic = ["version", "description"]
 
 authors = [
     {name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}"},
@@ -42,6 +41,9 @@ dependencies = [
 Source = "{{ cookiecutter.remote_git_repo }}"
 {%- endif %}
 
+# [project.scripts]
+# script_name = "{{ cookiecutter.project_slug }}:function"
+
 [project.optional-dependencies]
 test = [
     "pytest >=4.0.0",
@@ -62,7 +64,7 @@ dev = [
 
 [tool.black]
 line-length = 79
-target-version = ['py37','py38', 'py39']
+target-version = ['py39', 'py310']
 include = '\.pyi?$'
 extend-exclude = '''
 # A regex preceded with ^/ will apply only to files and directories

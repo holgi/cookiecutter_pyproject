@@ -4,3 +4,7 @@
 """
 
 __version__ = "{{ cookiecutter.version }}"
+
+
+def test():
+    print("works")

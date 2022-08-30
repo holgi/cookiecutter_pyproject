@@ -25,16 +25,16 @@ import pytest
 
 
 def test_example_unittest():
-    """ example unittest
+    """example unittest - try importing the project
 
     will be run by 'make test' and 'make testall' but not 'make  coverage'
     """
-    assert True
+    import {{ cookiecutter.project_slug }}  # noqa: F401
 
 
 @pytest.mark.functional
 def test_example_functional_test():
-    """ example unittest
+    """example unittest
 
     will be by 'make  coverage' and 'make testall' but not 'make test'
     """
