@@ -6,4 +6,4 @@ reference for the technical implementation of the
 ` {{ cookiecutter.project_slug }}` project code.
 
 
-:::  {{ cookiecutter.project_slug }}
+::: {{ cookiecutter.project_slug }}
