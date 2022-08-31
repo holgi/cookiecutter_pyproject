@@ -1,0 +1,17 @@
+site_name: {{ cookiecutter.project_name }} Docs
+
+nav:
+  - Introduction: index.md
+  - Tutorials: tutorials.md
+  - How-To Guides: how-to-guides.md
+  - Reference: reference.md
+  - Explanation: explanation.md
+
+repo_url: {{ cookiecutter.remote_git_repo }}
+
+theme:
+    name: readthedocs
+    highlightjs: true
+
+plugins:
+  - mkdocstrings

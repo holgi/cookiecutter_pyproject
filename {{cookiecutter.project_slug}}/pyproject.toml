@@ -61,6 +61,10 @@ dev = [
     "keyring",
     "pre-commit",
 ]
+docs = [
+    "mkdocs",
+    "mkdocstrings[python]",
+]
 
 [tool.black]
 line-length = 79

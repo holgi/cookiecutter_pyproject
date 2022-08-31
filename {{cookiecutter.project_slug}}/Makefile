@@ -1,4 +1,4 @@
-.PHONY: clean coverage coverall devenv install lint prepareenv repo test testall testfunctional tox
+.PHONY: clean coverage coverall docs devenv install lint prepareenv repo test testall testfunctional tox
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -29,7 +29,7 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
+clean: clean-build clean-docs clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
 clean-build: ## remove build artifacts
 	rm -fr build/
@@ -37,6 +37,9 @@ clean-build: ## remove build artifacts
 	rm -fr .eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -f {} +
+
+clean-docs: ## remove documentation artifacts
+	rm -fr site/
 
 clean-pyc: ## remove Python file artifacts
 	find . -name '*.pyc' -exec rm -f {} +
@@ -78,6 +81,12 @@ coverall: lint ## full test suite, check code coverage and open coverage report
 
 tox:  ## run fully isolated tests with tox
 	tox
+
+docs:  ## build the documentation using mkdocs
+	mkdocs build
+
+serve-docs: docs  ## build the documentation and serve them in a web server
+	mkdocs serve
 
 install:  ## install updated project.toml with flint
 	flit install --pth-file

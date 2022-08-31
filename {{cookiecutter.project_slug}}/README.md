@@ -24,3 +24,6 @@ To install the development version of {{ cookiecutter.project_name }}:
     make devenv
 
 To run the tests, use `make tests` or `make coverage` for a complete report.
+
+To generate the documentation pages use `make docs` or `make serve-docs` for
+starting a webserver with the generated documentation
