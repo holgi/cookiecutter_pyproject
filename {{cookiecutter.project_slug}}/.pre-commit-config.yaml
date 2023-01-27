@@ -11,33 +11,18 @@ repos:
     -   id: detect-private-key
 -   repo: local
     hooks:
-    -   id: isort-project
-        name: isort project
-        entry: isort -rc src
-        language: system
-        pass_filenames: false
-    -   id: isort-test
-        name: isort test
-        entry: isort -rc tests
-        language: system
-        pass_filenames: false
     -   id: black
-        name: black
+        name: Auto formatting code with "black"
         entry: black src tests
         language: system
         pass_filenames: false
-    -   id: flake8
-        name: flake8 project
-        entry: flake8 --ignore E231,W503 src
-        language: system
-        pass_filenames: false
-    -   id: flake8
-        name: flake8 test
-        entry: flake8 --ignore S101 tests
+    -   id: ruff
+        name: Linting code with "ruff"
+        entry: ruff src tests
         language: system
         pass_filenames: false
     -   id: pytest
-        name: pytest
+        name: Running tests with "pytest"
         entry: pytest tests
-        pass_filenames: false
         language: system
+        pass_filenames: false

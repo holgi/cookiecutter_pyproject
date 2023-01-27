@@ -54,11 +54,8 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 
 lint: ## reformat with black and check style with flake8
-	isort src
-	isort tests
 	black src tests
-	flake8 src
-	flake8 --ignore S101 tests
+	ruff src tests
 
 test: lint ## run tests quickly, stop on first error
 	pytest tests -x -l --last-failed --disable-warnings -m "not functional"

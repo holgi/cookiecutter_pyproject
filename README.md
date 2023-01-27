@@ -13,7 +13,7 @@ Features
 - [pytest][pytest]: for running tests, including coverage
 - [Tox][tox] testing: setup to easily test for Python 3.7
 - [black][black]: the uncompromising code formatter
-- [flake8][flake8]: python linting
+- [ruff][ruff]: python linting
 - [precommit][preco]: a selection of preinstalled pre-commit hooks
 
 
@@ -69,5 +69,5 @@ developers work:
 [pytest]: https://docs.pytest.org/
 [tox]: https://tox.readthedocs.io/
 [black]: https://black.readthedocs.io/
-[flake8]: https://flake8.pycqa.org/
+[ruff]: https://github.com/charliermarsh/ruff
 [preco]: https://pre-commit.com
