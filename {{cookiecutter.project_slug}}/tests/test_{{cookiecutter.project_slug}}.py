@@ -34,7 +34,7 @@ def test_example_unittest():
     assert True
 
 
-@pytest.mark.functional
+@pytest.mark.functional()
 def test_example_functional_test():
     """example unittest
 
