@@ -89,6 +89,7 @@ install:  ## install updated project.toml
 	.venv/bin/pip3 install -e ".[docs,dev,test]"
 
 prepareenv: ## helper to create virtual environment and install basic packages
+	rm -fr .venv/
 	python3 -m venv --prompt {{cookiecutter.project_slug}} .venv
 	.venv/bin/pip3 install --upgrade pip
 	.venv/bin/pip3 install wheel
