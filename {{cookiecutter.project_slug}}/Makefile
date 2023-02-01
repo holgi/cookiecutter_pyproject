@@ -85,14 +85,14 @@ docs:  ## build the documentation using mkdocs
 serve-docs: docs  ## build the documentation and serve them in a web server
 	mkdocs serve
 
-install:  ## install updated project.toml with flint
-	flit install --pth-file
+install:  ## install updated project.toml
+	.venv/bin/pip3 install -e ".[docs,dev,test]"
 
 prepareenv: ## helper to create virtual environment and install basic packages
 	python3 -m venv --prompt {{cookiecutter.project_slug}} .venv
 	.venv/bin/pip3 install --upgrade pip
-	.venv/bin/pip3 install "flit>3.2"
-	.venv/bin/flit install --pth-file
+	.venv/bin/pip3 install wheel
+	.venv/bin/pip3 install -e ".[docs,dev,test]"
 
 devenv: prepareenv ## setup development environment including precommit hooks
 	.venv/bin/pre-commit install --install-hooks

@@ -45,13 +45,6 @@ Source = "{{ cookiecutter.remote_git_repo }}"
 # script_name = "{{ cookiecutter.project_slug }}:function"
 
 [project.optional-dependencies]
-test = [
-    "pytest >=4.0.0",
-    "pytest-cov",
-    "pytest-mock",
-    "pytest-randomly",
-    "tox",
-]
 dev = [
     "black",
     "keyring",
@@ -61,6 +54,13 @@ dev = [
 docs = [
     "mkdocs",
     "mkdocstrings[python]",
+]
+test = [
+    "pytest >=4.0.0",
+    "pytest-cov",
+    "pytest-mock",
+    "pytest-randomly",
+    "tox",
 ]
 
 
