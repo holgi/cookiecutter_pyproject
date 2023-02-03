@@ -1,4 +1,4 @@
-.PHONY: clean coverage coverall docs devenv install lint prepareenv repo test testall testfunctional tox
+.PHONY: clean coverage coverall docs devenv install lint prepareenv repo test testall testfunctional nox tox
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -49,6 +49,7 @@ clean-pyc: ## remove Python file artifacts
 
 clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache/
+	rm -fr .nox/
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
@@ -94,8 +95,7 @@ install:  ## install updated project.toml
 prepareenv: ## helper to create virtual environment and install basic packages
 	rm -fr .venv/
 	python3 -m venv --prompt {{cookiecutter.project_slug}} .venv
-	.venv/bin/pip3 install --upgrade pip
-	.venv/bin/pip3 install wheel
+	.venv/bin/pip3 install --upgrade pip wheel
 	.venv/bin/pip3 install -e ".[dev,docs,test]"
 
 devenv: prepareenv ## setup development environment including precommit hooks
