@@ -76,8 +76,11 @@ coverall: lint ## full test suite, check code coverage and open coverage report
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
-tox:  ## run fully isolated tests with tox
-	tox
+nox:  ## run fully isolated tests with nox
+	nox
+
+tox:  ## old habits die hard: typo-squatting to use nox
+	nox
 
 docs:  ## build the documentation using mkdocs
 	mkdocs build
