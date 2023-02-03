@@ -89,14 +89,14 @@ serve-docs: docs  ## build the documentation and serve them in a web server
 	mkdocs serve
 
 install:  ## install updated project.toml
-	.venv/bin/pip3 install -e ".[docs,dev,test]"
+	.venv/bin/pip3 install -e ".[dev,docs,test]"
 
 prepareenv: ## helper to create virtual environment and install basic packages
 	rm -fr .venv/
 	python3 -m venv --prompt {{cookiecutter.project_slug}} .venv
 	.venv/bin/pip3 install --upgrade pip
 	.venv/bin/pip3 install wheel
-	.venv/bin/pip3 install -e ".[docs,dev,test]"
+	.venv/bin/pip3 install -e ".[dev,docs,test]"
 
 devenv: prepareenv ## setup development environment including precommit hooks
 	.venv/bin/pre-commit install --install-hooks

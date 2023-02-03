@@ -11,7 +11,7 @@ Features
 
 - [flit][flit]: build and packaging tool
 - [pytest][pytest]: for running tests, including coverage
-- [Tox][tox] testing: setup to easily test for Python 3.7
+- [nox][nox] testing: for running extended isolated tests
 - [black][black]: the uncompromising code formatter
 - [ruff][ruff]: python linting
 - [precommit][preco]: a selection of preinstalled pre-commit hooks
@@ -67,7 +67,7 @@ developers work:
 [coopy]: https://github.com/audreyr/cookiecutter-pypackage/
 [flit]: https://flit.readthedocs.io/
 [pytest]: https://docs.pytest.org/
-[tox]: https://tox.readthedocs.io/
+[nox]: https://nox.thea.codes
 [black]: https://black.readthedocs.io/
 [ruff]: https://github.com/charliermarsh/ruff
 [preco]: https://pre-commit.com
