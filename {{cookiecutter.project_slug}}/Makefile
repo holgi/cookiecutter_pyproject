@@ -1,4 +1,4 @@
-.PHONY: clean coverage coverall docs devenv install lint prepareenv repo test testall testfunctional nox tox
+.PHONY: clean clean-build clean-docs clean-pyc clean-test coverage coverall devenv docs help install lint nox prepareenv repo serve-docs test testall testfunctional tox venvexists
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -29,79 +29,87 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-clean: clean-build clean-docs clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
-clean-build: ## remove build artifacts
+venvexists:  ## helper to check if a virtual environment exists
+	ifeq (,$(wildcard .venv/bin/python))
+		$(error No virtual environment found, please run 'make devenv')
+	endif
+
+clean: clean-build clean-docs clean-pyc clean-test  ## remove all build, test, coverage and Python artifacts
+
+clean-build:  ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -f {} +
 
-clean-docs: ## remove documentation artifacts
+clean-docs:  ## remove documentation artifacts
 	rm -fr site/
 
-clean-pyc: ## remove Python file artifacts
+clean-pyc:  ## remove Python file artifacts
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -fr {} +
 
-clean-test: ## remove test and coverage artifacts
+clean-test:  ## remove test and coverage artifacts
+	rm -fr .mypy_cache/
 	rm -fr .pytest_cache/
+	rm -fr .ruff_cache/
 	rm -fr .nox/
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
 
-lint: ## reformat with black and check style with flake8
-	black src tests
-	ruff src tests
+lint: venvexists  ## reformat with black and check style with flake8
+	.venv/bin/black src tests
+	.venv/bin/ruff src tests
 
-test: lint ## run tests quickly, stop on first error
-	pytest tests -x -l --last-failed --disable-warnings -m "not functional"
+test: lint  ## run tests quickly, stop on first error
+	.venv/bin/pytest tests -x -l --last-failed --disable-warnings -m "not functional"
 
 testfunctional: lint ## run functional tests, stop on first error
-	pytest tests -x -l -m "functional"
+	.venv/bin/pytest tests -x -l -m "functional"
 
-testall: lint ## run all tests
-	pytest tests -l
+testall: lint  ## run all tests
+	.venv/bin/pytest tests -l
 
-coverage: lint ## functional test suite, check code coverage and open coverage report
-	pytest tests --cov={{cookiecutter.project_slug}} -l -m "functional"
-	coverage html
+coverage: lint  ## functional test suite, check code coverage and open coverage report
+	.venv/bin/pytest tests --cov={{cookiecutter.project_slug}} -l -m "functional"
+	.venv/bin/coverage html
 	$(BROWSER) htmlcov/index.html
 
-coverall: lint ## full test suite, check code coverage and open coverage report
-	pytest tests --cov={{cookiecutter.project_slug}} -l
-	coverage html
+coverall: lint   ## full test suite, check code coverage and open coverage report
+	.venv/bin/pytest tests --cov={{cookiecutter.project_slug}} -l
+	.venv/bin/coverage html
 	$(BROWSER) htmlcov/index.html
 
-nox:  ## run fully isolated tests with nox
-	nox
+nox: venvexists  ## run fully isolated tests with nox
+	.venv/bin/nox
 
-tox:  ## old habits die hard: typo-squatting to use nox
-	nox
+tox: venvexists  ## old habits die hard: typo-squatting to use nox
+	.venv/bin/nox
 
-docs:  ## build the documentation using mkdocs
-	mkdocs build
+docs: venvexists  ## build the documentation using mkdocs
+	.venv/bin/mkdocs build
 
 serve-docs: docs  ## build the documentation and serve them in a web server
-	mkdocs serve
+	.venv/bin/mkdocs serve
 
-install:  ## install updated project.toml
+install: venvexists  ## install updated project.toml
 	.venv/bin/pip3 install -e ".[dev,docs,test]"
 
-prepareenv: ## helper to create virtual environment and install basic packages
+prepareenv:  ## helper to create virtual environment and install basic packages
 	rm -fr .venv/
 	python3 -m venv --prompt {{cookiecutter.project_slug}} .venv
 	.venv/bin/pip3 install --upgrade pip wheel
 	.venv/bin/pip3 install -e ".[dev,docs,test]"
 
-devenv: prepareenv ## setup development environment including precommit hooks
+devenv: prepareenv  ## setup development environment including precommit hooks
 	.venv/bin/pre-commit install --install-hooks
 
-repo: prepareenv ## complete project setup with development environment and git repo
+repo: prepareenv  ## complete project setup with development environment and git repo
 	git init .
 	git add .
 	git commit -m "import of project template"
