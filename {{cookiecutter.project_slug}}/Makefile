@@ -31,9 +31,7 @@ help:
 
 
 venvexists:  ## helper to check if a virtual environment exists
-	ifeq (,$(wildcard .venv/bin/python))
-		$(error No virtual environment found, please run 'make devenv')
-	endif
+	@test -x .venv/bin/python || { echo "No virtual environment found, please run 'make devenv'"; exit 1; }
 
 clean: clean-build clean-docs clean-pyc clean-test  ## remove all build, test, coverage and Python artifacts
 
