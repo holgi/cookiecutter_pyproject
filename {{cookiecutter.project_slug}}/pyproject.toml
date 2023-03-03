@@ -47,6 +47,7 @@ Source = "{{ cookiecutter.remote_git_repo }}"
 [project.optional-dependencies]
 dev = [
     "black",
+    "flit",
     "keyring",
     "pre-commit",
     "ruff",
