@@ -65,21 +65,21 @@ lint: venvexists  ## reformat with black and check style with flake8
 	.venv/bin/ruff src tests
 
 test: lint  ## run tests quickly, stop on first error
-	.venv/bin/pytest tests -x -l --last-failed --disable-warnings -m "not functional"
+	.venv/bin/pytest tests --stepwise --disable-warnings -m "not functional"
 
 testfunctional: lint ## run functional tests, stop on first error
-	.venv/bin/pytest tests -x -l -m "functional"
+	.venv/bin/pytest tests --stepwise -m "functional"
 
 testall: lint  ## run all tests
-	.venv/bin/pytest tests -l
+	.venv/bin/pytest tests
 
 coverage: lint  ## functional test suite, check code coverage and open coverage report
-	.venv/bin/pytest tests --cov={{cookiecutter.project_slug}} -l -m "functional"
+	.venv/bin/pytest tests --cov={{cookiecutter.project_slug}} --cov=tests -m "functional"
 	.venv/bin/coverage html
 	$(BROWSER) htmlcov/index.html
 
 coverall: lint   ## full test suite, check code coverage and open coverage report
-	.venv/bin/pytest tests --cov={{cookiecutter.project_slug}} -l
+	.venv/bin/pytest tests --cov={{cookiecutter.project_slug}} --cov=tests
 	.venv/bin/coverage html
 	$(BROWSER) htmlcov/index.html
 
