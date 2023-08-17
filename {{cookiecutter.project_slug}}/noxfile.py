@@ -46,16 +46,16 @@ def tests(session):
 
 @nox.session(python=["3.9", "3.10", "3.11"])
 @nox.parametrize(
-    ("repo", "test_dir"),
+    "repo",
     [
-        ("https://git.example.com/user/repo", "tests"),
+        "https://git.example.com/user/repo",
     ],
 )
-def downstream(session, repo, test_dir):
+def downstream(session, repo):
     tmpdir = RepoCache.clone(session, repo)
 
     session.install(".")
     session.install(f"{tmpdir}[test]")
 
-    test_path = pathlib.Path(tmpdir) / test_dir
+    test_path = pathlib.Path(tmpdir) / "tests"
     session.run("pytest", test_path)
