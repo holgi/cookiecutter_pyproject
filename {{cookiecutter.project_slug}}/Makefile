@@ -74,7 +74,7 @@ testall: lint  ## run all tests
 	.venv/bin/pytest tests
 
 coverage: lint  ## functional test suite, check code coverage and open coverage report
-	.venv/bin/pytest tests --cov={{cookiecutter.project_slug}} --cov=tests -m "functional"
+	.venv/bin/pytest tests --cov={{cookiecutter.project_slug}} -m "functional"
 	.venv/bin/coverage html
 	$(BROWSER) htmlcov/index.html
 
