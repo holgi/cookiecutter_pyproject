@@ -11,9 +11,9 @@ repos:
     -   id: detect-private-key
 -   repo: local
     hooks:
-    -   id: black
-        name: Auto formatting code with "black"
-        entry: black src tests
+    -   id: ruff-formatting
+        name: Auto formatting code with "ruff format"
+        entry: ruff format src tests
         language: system
         pass_filenames: false
     -   id: ruff

@@ -12,7 +12,7 @@ build-backend = "flit_core.buildapi"
 name = "{{ cookiecutter.project_slug }}"
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dynamic = ["version", "description"]
 
 authors = [
@@ -23,9 +23,9 @@ authors = [
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Developers",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3 :: Only",
 {%- if cookiecutter.open_source_license in license_classifiers %}
     "{{ license_classifiers[cookiecutter.open_source_license] }}",
@@ -46,7 +46,6 @@ Source = "{{ cookiecutter.remote_git_repo }}"
 
 [project.optional-dependencies]
 dev = [
-    "black",
     "flit",
     "keyring",
     "pre-commit",
@@ -77,50 +76,45 @@ addopts = [
     "-ra",
 ]
 
-
-[tool.black]
-line-length = 79
-target-version = ['py39', 'py310']
-include = '\.pyi?$'
-extend-exclude = '''
-# A regex preceded with ^/ will apply only to files and directories
-# in the root of the project.
-^/.git
-^/.tox
-^/.venv
-^/.build
-^/.dist
-'''
-
-
 [tool.ruff]
-# see https://github.com/charliermarsh/ruff
+# see https://docs.astral.sh/ruff/configuration/
+
+line-length = 80
+indent-width = 4
+
+fixable = ["ALL"]
+fix = true
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
 select = ["ALL"]
 ignore = [
     # ignored for now, should be activated in the future
     # docstrings
     "D",
-    # flake8-annotations
-    "ANN",
-    # flake8-type-checking
-    "TCH",
 
-    # ignored, "black" will handle this
-    # flake8-commas
-    "COM",
+    # don't complain about not annotating self
+    "ANN101",
+
+    # ignored, "ruff format" will handle this
+    "COM812",
+    "ISC001",
 
     # ignored, due to Windows / WSL2 setup
     # flake8-executable
     "EXE",
 ]
-fixable = ["I"]
-fix = true
-line-length=79
-target-version = "py38"
+
+
+[tool.ruff.format]
+indent-style = "space"
 
 [tool.ruff.per-file-ignores]
 # see https://github.com/charliermarsh/ruff
-"tests/*" = ["FBT003", "INP001", "PLR2004", "S101", "SLF001"]
+"tests/*" = ["FBT003", "INP001", "PLR2004", "S101", "SLF001", "ANN"]
+"noxfile.py" = ["ANN"]
 
 [tool.ruff.pydocstyle]
 convention = "pep257"  # Accepts: "google", "numpy", or "pep257".
