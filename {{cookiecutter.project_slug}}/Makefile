@@ -62,7 +62,7 @@ clean-test:  ## remove test and coverage artifacts
 
 lint: venvexists  ## reformat with black and check style with flake8
 	.venv/bin/ruff format src tests noxfile.py
-	.venv/bin/ruff src tests noxfile.py
+	.venv/bin/ruff check src tests noxfile.py
 
 test: lint  ## run tests quickly, stop on first error
 	.venv/bin/pytest tests --stepwise --disable-warnings -m "not functional"
