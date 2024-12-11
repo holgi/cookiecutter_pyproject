@@ -1,4 +1,4 @@
-.PHONY: clean clean-build clean-docs clean-pyc clean-test coverage coverall devenv docs help install lint nox prepareenv repo serve-docs test testall testfunctional tox venvexists
+.PHONY: clean clean-build clean-docs clean-pyc clean-test coverage coverall devenv docs help install lint nox repo serve-docs test testall testfunctional tox
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -29,10 +29,6 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-
-venvexists:  ## helper to check if a virtual environment exists
-	@test -x .venv/bin/python || { echo "No virtual environment found, please run 'make devenv'"; exit 1; }
-
 clean: clean-build clean-docs clean-pyc clean-test  ## remove all build, test, coverage and Python artifacts
 
 clean-build:  ## remove build artifacts
@@ -60,54 +56,49 @@ clean-test:  ## remove test and coverage artifacts
 	rm -f .coverage
 	rm -fr htmlcov/
 
-lint: venvexists  ## reformat with black and check style with flake8
-	.venv/bin/ruff format src tests noxfile.py
-	.venv/bin/ruff check src tests noxfile.py
+lint:  ## reformat with black and check style with flake8
+	uv run ruff format src tests noxfile.py
+	uv run ruff check src tests noxfile.py
 
 test: lint  ## run tests quickly, stop on first error
-	.venv/bin/pytest tests --stepwise --disable-warnings -m "not functional"
+	uv run pytest tests --stepwise --disable-warnings -m "not integration"
 
 testfunctional: lint ## run functional tests, stop on first error
-	.venv/bin/pytest tests --stepwise -m "functional"
+	uv run pytest tests --stepwise -m "integration"
 
 testall: lint  ## run all tests
-	.venv/bin/pytest tests
+	uv run pytest tests
 
 coverage: lint  ## functional test suite, check code coverage and open coverage report
-	.venv/bin/pytest tests --cov={{cookiecutter.project_slug}} -m "functional"
-	.venv/bin/coverage html
+	uv run pytest tests --cov={{cookiecutter.project_slug}} -m "integration"
+	uv run coverage html
 	$(BROWSER) htmlcov/index.html
 
 coverall: lint   ## full test suite, check code coverage and open coverage report
-	.venv/bin/pytest tests --cov={{cookiecutter.project_slug}} --cov=tests
-	.venv/bin/coverage html
+	uv run pytest tests --cov={{cookiecutter.project_slug}} --cov=tests
+	uv run coverage html
 	$(BROWSER) htmlcov/index.html
 
-nox: venvexists  ## run fully isolated tests with nox
-	.venv/bin/nox
+nox:  ## run fully isolated tests with nox
+	uv run nox
 
-tox: venvexists  ## old habits die hard: typo-squatting to use nox
-	.venv/bin/nox
+tox:  ## old habits die hard: typo-squatting to use nox
+	uv run nox
 
-docs: venvexists  ## build the documentation using mkdocs
-	.venv/bin/mkdocs build
+docs:  ## build the documentation using mkdocs
+	uv run mkdocs build
 
 serve-docs: docs  ## build the documentation and serve them in a web server
-	.venv/bin/mkdocs serve
+	uv run mkdocs serve
 
-install: venvexists  ## install updated project.toml
-	.venv/bin/pip3 install -e ".[dev,docs,test]"
-
-prepareenv:  ## helper to create virtual environment and install basic packages
+install:  ## install updated project.toml
 	rm -fr .venv/
-	python3 -m venv --prompt {{cookiecutter.project_slug}} .venv
-	.venv/bin/pip3 install --upgrade pip wheel
-	.venv/bin/pip3 install -e ".[dev,docs,test]"
+	uv sync --all-groups
 
-devenv: prepareenv  ## setup development environment including precommit hooks
-	.venv/bin/pre-commit install --install-hooks
+devenv: install  ## setup development environment including precommit hooks
+	uv run pre-commit install --install-hooks
 
-repo: prepareenv  ## complete project setup with development environment and git repo
+repo: install  ## complete project setup with development environment and git repo
 	git init .
 	git add .
 	git commit -m "import of project template"
@@ -116,4 +107,4 @@ repo: prepareenv  ## complete project setup with development environment and git
 	git remote add origin {{ cookiecutter.remote_git_repo }}
 	git push -u origin main --no-verify
 	{% endif %}
-	.venv/bin/pre-commit install --install-hooks
+	uv run pre-commit install --install-hooks

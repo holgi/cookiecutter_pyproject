@@ -4,16 +4,20 @@
     'GNU General Public License v3': 'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'
 } %}
 
-[build-system]
-requires = ["flit_core>=3.2,<4"]
-build-backend = "flit_core.buildapi"
-
 [project]
 name = "{{ cookiecutter.project_slug }}"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
 dynamic = ["version", "description"]
+
+{%- if cookiecutter.remote_git_repo != "" %}
+[project.urls]
+source = "{{ cookiecutter.remote_git_repo }}"
+{%- endif %}
+
+# [project.scripts]
+# script_name = "{{ cookiecutter.project_slug }}:function"
 
 authors = [
     {name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}"},
@@ -25,7 +29,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3 :: Only",
 {%- if cookiecutter.open_source_license in license_classifiers %}
     "{{ license_classifiers[cookiecutter.open_source_license] }}",
@@ -36,15 +40,7 @@ dependencies = [
 
 ]
 
-{%- if cookiecutter.remote_git_repo != "" %}
-[project.urls]
-Source = "{{ cookiecutter.remote_git_repo }}"
-{%- endif %}
-
-# [project.scripts]
-# script_name = "{{ cookiecutter.project_slug }}:function"
-
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "flit",
     "keyring",
@@ -57,17 +53,21 @@ docs = [
 ]
 test = [
     "nox",
-    "pytest >=4.0.0",
+    "pytest >= 4.0.0",
     "pytest-cov",
     "pytest-icdiff",
     "pytest-mock",
     "pytest-randomly",
 ]
 
+[build-system]
+requires = ["flit_core>=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
 
 [tool.pytest.ini_options]
 markers = [
-    "functional: marks tests as functional (deselect with '-m \"not functional\"')",
+    "integration: marks tests as integration test (deselect with '-m \"not integration\"')",
 ]
 addopts = [
     "--strict-markers",
@@ -84,6 +84,9 @@ indent-width = 4
 
 fix = true
 
+[tool.ruff.format]
+indent-style = "space"
+
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
@@ -94,9 +97,6 @@ ignore = [
     # ignored for now, should be activated in the future
     # docstrings
     "D",
-
-    # don't complain about not annotating self
-    "ANN101",
 
     # ignored, "ruff format" will handle this
     "COM812",
@@ -115,7 +115,3 @@ ignore = [
 [tool.ruff.lint.pydocstyle]
 convention = "pep257"  # Accepts: "google", "numpy", or "pep257".
 
-
-
-[tool.ruff.format]
-indent-style = "space"
